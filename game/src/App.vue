@@ -1,15 +1,21 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <HeaderInfo></HeaderInfo>
+  <img alt="Jogo da Velha Logo" src="./assets/logoGame.png">
+  <GameBoard></GameBoard>
+  <GameInstructions></GameInstructions>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import GameBoard from './components/GameBoard.vue'
+import HeaderInfo from './components/HeaderInfo.vue';
+import GameInstructions from './components/GameInstructions.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    GameBoard,
+    HeaderInfo,
+    GameInstructions
   }
 }
 </script>
@@ -20,7 +26,17 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #2a94a6ff;
+  margin-top: 20px;
+  background-color: #333;
+  padding: 0 20px;
+}
+
+img {
+  width: 40%;
+  max-height: 180px; 
+  margin: 10px auto; 
+  display: block;
+  object-fit: contain;
 }
 </style>
