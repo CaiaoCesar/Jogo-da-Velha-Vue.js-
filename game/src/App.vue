@@ -1,20 +1,25 @@
 <template>
   <HeaderInfo></HeaderInfo>
-  <img alt="Jogo da Velha Logo" src="./assets/logoGame.png">
+  <ImagesGame></ImagesGame>
   <GameBoard></GameBoard>
+  <ScoreTable></ScoreTable>
   <GameInstructions></GameInstructions>
 </template>
 
 <script>
 import GameBoard from './components/GameBoard.vue'
 import HeaderInfo from './components/HeaderInfo.vue';
+import ScoreTable from './components/ScoreTable.vue';
 import GameInstructions from './components/GameInstructions.vue';
+import ImagesGame from './components/ImagesGame.vue';
 
 export default {
   name: 'App',
   components: {
+    ImagesGame,
     GameBoard,
     HeaderInfo,
+    ScoreTable,
     GameInstructions
   }
 }
@@ -32,11 +37,4 @@ export default {
   padding: 0 20px;
 }
 
-img {
-  width: 40%;
-  max-height: 180px; 
-  margin: 10px auto; 
-  display: block;
-  object-fit: contain;
-}
 </style>

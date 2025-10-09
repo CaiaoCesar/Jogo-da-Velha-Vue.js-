@@ -13,9 +13,8 @@
 
 <style scoped>
 .instructions {
-    background-color: #615b5bff;
-    color: #fff;
     padding: 10px;
     text-align: center;
+    font-size: medium;
 }
 </style>
