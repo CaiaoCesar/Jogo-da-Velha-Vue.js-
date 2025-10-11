@@ -37,9 +37,7 @@ h3{
     gap: 5%;
     width: 100%;
 }
-table {
-    background-color: #615b5bff;
-    color: #fff;
+table {  
     text-align: center;
     width: 35%;
     height: 10%;
