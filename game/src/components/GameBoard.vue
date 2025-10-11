@@ -1,9 +1,13 @@
 <template>
   <h2>Que vença o melhor!</h2>
+  <div class="seleciona-jogador">
+    <p>Rodada: <strong>{{ round }}</strong><br> <strong>{{ playerStart }} iniciou o jogo!</strong></p>
+    <p>Vez do Jogador: <strong>{{ currentPlayer }}.</strong></p>
+  </div>
   <div class="board">
     <div class="cell" v-for="(cell, index) in cells" :key="index" @click="cellClick(index)">
       <img v-if="cell === 'O'" src="../assets/O.png" alt="Imagem O" />
-      <img v-else-if="cell === 'X'" src="../assets/X.png" alt="Imagem X" />
+      <img class="X" v-else-if="cell === 'X'" src="../assets/X.png" alt="Imagem X" />
     </div>
   </div>
   <div class="btn-restart">
@@ -17,6 +21,8 @@ export default {
     return {
       cells: Array(9).fill(""),
       currentPlayer: "X",
+      playerStart: "X",
+      round: 1
     };
   },
   methods: {
@@ -25,11 +31,61 @@ export default {
 
       this.cells[index] = this.currentPlayer;
 
-      this.currentPlayer = this.currentPlayer === "X" ? "O" : "X";
+      this.checkStateGame();
+
+      if (!this.gameOver()) {
+        this.currentPlayer = this.currentPlayer === "X" ? "O" : "X";
+      }
     },
 
     restartGame() {
       this.cells = Array(9).fill("");
+      this.rodada++;
+
+      if (this.playerStart === "X") {
+        this.playerStart = "O";
+        this.currentPlayer = "O";
+      }
+      else {
+        this.playerStart = "X";
+        this.currentPlayer = "X";
+      }
+    },
+
+    checkStateGame() {
+      const winConditions = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6],
+      ];
+
+      for (const condition of winConditions) {
+        const [a, b, c] = condition;
+
+        if (
+          this.cells[a] &&
+          this.cells[a] === this.cells[b] &&
+          this.cells[a] === this.cells[c]
+        ) {
+          const winner = this.cells[a];
+          setTimeout(() => {
+            alert(`O jogador ${winner} ganhou!`);
+          })
+          return true;
+        }
+      }
+
+      if (this.cells.every((cell) => cell !== "")) {
+        setTimeout(() => {
+          alert("Empatou ou melhor dizendo 'Deu velha!'");
+        })
+        return true;
+      }
+      return false;
+    },
+
+    gameOver() {
+      return this.checkStateGame() || this.cells.every(cell => cell !== '');
     },
   },
 };
@@ -70,7 +126,12 @@ h2 {
 }
 
 .cell img {
-  width: 70%;
+  width: 80%;
+  height: auto;
+}
+
+.cell img.X {
+  width: 65%;
   height: auto;
 }
 
@@ -105,6 +166,7 @@ h2 {
   border: 3px solid #e0e8e4c8;
   Transform: scale(1.025);
 }
+
 .btn-restart:hover button {
   color: #121413c8;
   background-color: #42b983;

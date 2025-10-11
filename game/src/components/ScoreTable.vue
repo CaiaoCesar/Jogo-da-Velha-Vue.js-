@@ -1,15 +1,19 @@
 <template>
+    <div class="input-names">
+        <input class="input-p1" v-model="playerOne" type="text" placeholder="Nome do Jogador 1">
+        <input class="input-p2"  v-model="playerTwo" type="text" placeholder="Nome do Jogador 2">
+    </div>
     <h3>Placar:</h3>
     <div class="tables-container">
         <table>
             <tr>
-                <th>Jogador 1:</th>
+                <th>{{ playerOne || "Jogador 1" }}:</th>
                 <td>0</td>
             </tr>
         </table>
         <table>
             <tr>
-                <th>Jogador 2:</th>
+                <th>{{ playerTwo || "Jogador 2" }}:</th>
                 <td>0</td>
             </tr>
         </table>
@@ -18,7 +22,15 @@
 
 <script>
 export default {
-  
+  name: 'ScoreTable',
+  data() {
+      return {
+          playerOne: "",
+          playerTwo: ""
+      }
+  },
+  methods: {
+  }
 }
 </script>
 
@@ -52,5 +64,21 @@ th, td{
     font-weight: 900;
     padding: 2px;
     font-size: 2em;
+}
+.input-name{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+input{
+    padding: 5px;
+    border-radius: 5px;
+    border: 2px solid #42b983;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 1.1em;
 }
 </style>
