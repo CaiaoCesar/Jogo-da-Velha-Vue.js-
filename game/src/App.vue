@@ -1,8 +1,13 @@
 <template>
   <HeaderInfo></HeaderInfo>
   <ImagesGame></ImagesGame>
-  <GameBoard></GameBoard>
-  <ScoreTable></ScoreTable>
+  
+  <!-- GameBoard emite o evento game-ended -->
+  <GameBoard @game-ended="handleGameEnd"></GameBoard>
+  
+  <!-- ScoreTable com ref para podermos acessar seus métodos -->
+  <ScoreTable ref="scoreTable"></ScoreTable>
+  
   <GameInstructions></GameInstructions>
 </template>
 
@@ -21,6 +26,12 @@ export default {
     HeaderInfo,
     ScoreTable,
     GameInstructions
+  },
+  methods: {
+    handleGameEnd(result) {
+      // Chama o método updateScore do ScoreTable
+      this.$refs.scoreTable.updateScore(result);
+    }
   }
 }
 </script>
@@ -36,5 +47,4 @@ export default {
   background-color: #333;
   padding: 0 20px;
 }
-
 </style>

@@ -7,7 +7,7 @@ export default {
 <template>
     <div class="instructions">
         <h3>Como Jogar?</h3>
-        <p><strong>Forme uma sequência de 3 símbolos para ganhar! A sequência pode ser vertical, horizontal e
+        <p><strong>Forme uma sequência de 3 símbolos iguais para ganhar! A sequência pode ser vertical, horizontal e
                 diagonal</strong></p>
     </div>
 </template>

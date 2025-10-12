@@ -1,8 +1,9 @@
 <template>
   <h2>Que vença o melhor!</h2>
-  <div class="seleciona-jogador">
-    <p>Rodada: <strong>{{ round }}</strong><br> <strong>{{ playerStart }} iniciou o jogo!</strong></p>
-    <p>Vez do Jogador: <strong>{{ currentPlayer }}.</strong></p>
+  <div class="game-info">
+    <p>Rodada: <strong>{{ round }}</strong></p> 
+    <p><strong>{{ playerStart }} iniciou o jogo!</strong></p>
+    <p>Vez do Jogador: <strong>{{ currentPlayer }}</strong></p>
   </div>
   <div class="board">
     <div class="cell" v-for="(cell, index) in cells" :key="index" @click="cellClick(index)">
@@ -22,34 +23,32 @@ export default {
       cells: Array(9).fill(""),
       currentPlayer: "X",
       playerStart: "X",
-      round: 1
+      round: 1,
+      gameFinished: false // Nova variável para controlar se o jogo acabou
     };
   },
   methods: {
     cellClick(index) {
-      if (this.cells[index] !== "") return;
+      // Se célula já preenchida ou jogo acabou, não faz nada
+      if (this.cells[index] !== "" || this.gameFinished) return;
 
       this.cells[index] = this.currentPlayer;
 
-      this.checkStateGame();
+      // Verifica se o jogo terminou
+      const gameOver = this.checkStateGame();
 
-      if (!this.gameOver()) {
+      if (!gameOver) {
         this.currentPlayer = this.currentPlayer === "X" ? "O" : "X";
       }
     },
 
     restartGame() {
       this.cells = Array(9).fill("");
-      this.rodada++;
+      this.round++;
+      this.gameFinished = false; // Reseta o estado do jogo
 
-      if (this.playerStart === "X") {
-        this.playerStart = "O";
-        this.currentPlayer = "O";
-      }
-      else {
-        this.playerStart = "X";
-        this.currentPlayer = "X";
-      }
+      this.playerStart = this.playerStart === "X" ? "O" : "X";
+      this.currentPlayer = this.playerStart;
     },
 
     checkStateGame() {
@@ -59,6 +58,7 @@ export default {
         [0, 4, 8], [2, 4, 6],
       ];
 
+      // Verifica vitória
       for (const condition of winConditions) {
         const [a, b, c] = condition;
 
@@ -68,25 +68,36 @@ export default {
           this.cells[a] === this.cells[c]
         ) {
           const winner = this.cells[a];
+          
+          this.gameFinished = true; // Marca que o jogo acabou
+          
+          // EMIT: Envia o vencedor para o componente pai
+          this.$emit('game-ended', { winner: winner, type: 'win' });
+          
           setTimeout(() => {
             alert(`O jogador ${winner} ganhou!`);
-          })
+          }, 10);
+          
           return true;
         }
       }
 
+      // Verifica empate
       if (this.cells.every((cell) => cell !== "")) {
+        this.gameFinished = true; // Marca que o jogo acabou
+        
+        // EMIT: Envia empate para o componente pai
+        this.$emit('game-ended', { winner: null, type: 'draw' });
+        
         setTimeout(() => {
           alert("Empatou ou melhor dizendo 'Deu velha!'");
-        })
+        }, 10);
+        
         return true;
       }
+      
       return false;
-    },
-
-    gameOver() {
-      return this.checkStateGame() || this.cells.every(cell => cell !== '');
-    },
+    }
   },
 };
 </script>
@@ -99,7 +110,18 @@ h2 {
   font-size: 1.8em;
   font-style: normal;
 }
-
+.game-info {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 1.1em;
+  padding: 10px;
+  text-align: center;
+}
+.game-info strong {
+  color: #42b983;
+}
 .board {
   display: grid;
   grid-template-columns: repeat(3, 7.5em);
