@@ -1,18 +1,25 @@
 <template>
   <h2>Que vença o melhor!</h2>
   <div class="game-info">
-    <p>Rodada: <strong>{{ round }}</strong></p> 
+    <p>Rodada: <strong>{{ round }}</strong></p>
     <p><strong>{{ playerStart }} iniciou o jogo!</strong></p>
     <p>Vez do Jogador: <strong>{{ currentPlayer }}</strong></p>
+
+    <!-- Mensagem de resultado do jogo -->
+    <div v-if="gameMessage" class="game-message" :class="messageType">
+      {{ gameMessage }}
+    </div>
   </div>
+
   <div class="board">
     <div class="cell" v-for="(cell, index) in cells" :key="index" @click="cellClick(index)">
       <img v-if="cell === 'O'" src="../assets/O.png" alt="Imagem O" />
       <img class="X" v-else-if="cell === 'X'" src="../assets/X.png" alt="Imagem X" />
     </div>
   </div>
+
   <div class="btn-restart">
-    <button @click="restartGame">Reiniciar</button>
+    <button @click="restartGame">Reiniciar #</button>
   </div>
 </template>
 
@@ -24,17 +31,17 @@ export default {
       currentPlayer: "X",
       playerStart: "X",
       round: 1,
-      gameFinished: false // Nova variável para controlar se o jogo acabou
+      gameFinished: false,
+      gameMessage: "", // Nova variável para a mensagem
+      messageType: "" // Tipo da mensagem (win/draw)
     };
   },
   methods: {
     cellClick(index) {
-      // Se célula já preenchida ou jogo acabou, não faz nada
       if (this.cells[index] !== "" || this.gameFinished) return;
 
       this.cells[index] = this.currentPlayer;
 
-      // Verifica se o jogo terminou
       const gameOver = this.checkStateGame();
 
       if (!gameOver) {
@@ -45,7 +52,9 @@ export default {
     restartGame() {
       this.cells = Array(9).fill("");
       this.round++;
-      this.gameFinished = false; // Reseta o estado do jogo
+      this.gameFinished = false;
+      this.gameMessage = "";
+      this.messageType = "";
 
       this.playerStart = this.playerStart === "X" ? "O" : "X";
       this.currentPlayer = this.playerStart;
@@ -68,34 +77,30 @@ export default {
           this.cells[a] === this.cells[c]
         ) {
           const winner = this.cells[a];
-          
-          this.gameFinished = true; // Marca que o jogo acabou
-          
+
+          this.gameFinished = true;
+          this.gameMessage = `🎉 O jogador ${winner} ganhou! 🎉`;
+          this.messageType = "win";
+
           // EMIT: Envia o vencedor para o componente pai
           this.$emit('game-ended', { winner: winner, type: 'win' });
-          
-          setTimeout(() => {
-            alert(`O jogador ${winner} ganhou!`);
-          }, 10);
-          
+
           return true;
         }
       }
 
       // Verifica empate
       if (this.cells.every((cell) => cell !== "")) {
-        this.gameFinished = true; // Marca que o jogo acabou
-        
+        this.gameFinished = true;
+        this.gameMessage = "🤝 Empatou! Deu velha! 🤝";
+        this.messageType = "draw";
+
         // EMIT: Envia empate para o componente pai
         this.$emit('game-ended', { winner: null, type: 'draw' });
-        
-        setTimeout(() => {
-          alert("Empatou ou melhor dizendo 'Deu velha!'");
-        }, 10);
-        
+
         return true;
       }
-      
+
       return false;
     }
   },
@@ -110,6 +115,7 @@ h2 {
   font-size: 1.8em;
   font-style: normal;
 }
+
 .game-info {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -118,10 +124,47 @@ h2 {
   font-size: 1.1em;
   padding: 10px;
   text-align: center;
+  min-height: 120px;
 }
+
 .game-info strong {
   color: #42b983;
 }
+
+.game-message {
+  margin-top: 15px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: 900;
+  font-size: 1.2em;
+  animation: fadeIn 0.5s ease-in;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.game-message.win {
+  background: linear-gradient(135deg, #42b983, #26dda9);
+  color: white;
+  border: 3px solid #2a945b;
+}
+
+.game-message.draw {
+  background: linear-gradient(135deg, #ffb347, #ffcc33);
+  color: #333;
+  border: 3px solid #e6a336;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .board {
   display: grid;
   grid-template-columns: repeat(3, 7.5em);
@@ -158,7 +201,8 @@ h2 {
 }
 
 .btn-restart {
-  width: 20%;
+  display: flex;
+  width: 32%;
   height: 50px;
   margin: auto;
   margin-bottom: 20px;

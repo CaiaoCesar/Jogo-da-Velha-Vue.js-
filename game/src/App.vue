@@ -1,13 +1,13 @@
 <template>
   <HeaderInfo></HeaderInfo>
   <ImagesGame></ImagesGame>
-  
+
   <!-- GameBoard emite o evento game-ended -->
   <GameBoard @game-ended="handleGameEnd"></GameBoard>
-  
+
   <!-- ScoreTable com ref para podermos acessar seus métodos -->
   <ScoreTable ref="scoreTable"></ScoreTable>
-  
+
   <GameInstructions></GameInstructions>
 </template>
 
@@ -45,6 +45,5 @@ export default {
   color: #2a94a6ff;
   margin-top: 20px;
   background-color: #333;
-  padding: 0 20px;
 }
 </style>
