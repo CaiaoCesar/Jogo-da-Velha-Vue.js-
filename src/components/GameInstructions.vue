@@ -29,6 +29,7 @@ export default {
     font-size: 1.1em;
     padding: 10px;
     text-align: center;
+    margin-top: 30px;
 }
 
 .footer {
