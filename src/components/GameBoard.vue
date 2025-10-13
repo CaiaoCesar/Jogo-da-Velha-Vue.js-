@@ -19,7 +19,7 @@
   </div>
 
   <div class="btn-restart">
-    <button @click="restartGame">Reiniciar #</button>
+    <button @click="restartGame">Reiniciar</button>
   </div>
 </template>
 
