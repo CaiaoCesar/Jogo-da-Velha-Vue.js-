@@ -202,7 +202,7 @@ h2 {
 
 .btn-restart {
   display: flex;
-  width: 32%;
+  width: 40%;
   height: 50px;
   margin: auto;
   margin-bottom: 20px;
