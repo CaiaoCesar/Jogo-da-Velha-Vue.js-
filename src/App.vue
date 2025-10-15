@@ -6,7 +6,7 @@
   <ScoreTable ref="scoreTable" @player-names-updated="handlePlayerNamesUpdate"></ScoreTable>
 
   <!-- GameBoard recebe os nomes dos jogadores -->
-  <GameBoard @game-ended="handleGameEnd" :playerNames="playerNames"></GameBoard>
+  <GameBoard @game-ended="handleGameEnd" :playerNames="playerNames" @reset-game="handleResetGame"></GameBoard>
 
   <GameInstructions></GameInstructions>
 </template>
@@ -43,6 +43,10 @@ export default {
     handlePlayerNamesUpdate(names) {
       // Atualiza os nomes dos jogadores quando são modificados no ScoreTable
       this.playerNames = names;
+    },
+
+    handleResetGame() {
+      this.$refs.scoreTable.resetScore();
     }
   }
 }
