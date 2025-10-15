@@ -1,9 +1,8 @@
 <template>
-  <h2>Que vença o melhor!</h2>
   <div class="game-info">
     <p>Rodada: <strong>{{ round }}</strong></p>
-    <p><strong>{{ playerStart }} iniciou o jogo!</strong></p>
-    <p>Vez do Jogador: <strong>{{ currentPlayer }}</strong></p>
+    <p><strong>{{ getPlayerName(playerStart) }} iniciou o jogo!</strong></p>
+    <p>Vez do Jogador: <strong>{{ getPlayerName(currentPlayer) }}</strong></p>
 
     <!-- Mensagem de resultado do jogo -->
     <div v-if="gameMessage" class="game-message" :class="messageType">
@@ -25,6 +24,15 @@
 
 <script>
 export default {
+  props: {
+    playerNames: {
+      type: Object,
+      default: () => ({
+        playerX: "Jogador 1",
+        playerO: "Jogador 2"
+      })
+    }
+  },
   data() {
     return {
       cells: Array(9).fill(""),
@@ -32,8 +40,8 @@ export default {
       playerStart: "X",
       round: 1,
       gameFinished: false,
-      gameMessage: "", // Nova variável para a mensagem
-      messageType: "" // Tipo da mensagem (win/draw)
+      gameMessage: "",
+      messageType: ""
     };
   },
   methods: {
@@ -67,7 +75,6 @@ export default {
         [0, 4, 8], [2, 4, 6],
       ];
 
-      // Verifica vitória
       for (const condition of winConditions) {
         const [a, b, c] = condition;
 
@@ -77,45 +84,44 @@ export default {
           this.cells[a] === this.cells[c]
         ) {
           const winner = this.cells[a];
+          const winnerName = this.getPlayerName(winner);
 
           this.gameFinished = true;
-          this.gameMessage = `🎉 O jogador ${winner} ganhou! 🎉`;
+          this.gameMessage = `🎉 ${winnerName} ganhou! 🎉`;
           this.messageType = "win";
 
-          // EMIT: Envia o vencedor para o componente pai
           this.$emit('game-ended', { winner: winner, type: 'win' });
 
           return true;
         }
       }
 
-      // Verifica empate
       if (this.cells.every((cell) => cell !== "")) {
         this.gameFinished = true;
         this.gameMessage = "🤝 Empatou! Deu velha! 🤝";
         this.messageType = "draw";
 
-        // EMIT: Envia empate para o componente pai
         this.$emit('game-ended', { winner: null, type: 'draw' });
 
         return true;
       }
 
       return false;
+    },
+
+    getPlayerName(playerSymbol) {
+      if (playerSymbol === 'X') {
+        return this.playerNames.playerX;
+      } else if (playerSymbol === 'O') {
+        return this.playerNames.playerO;
+      }
+      return playerSymbol;
     }
-  },
+  }
 };
 </script>
 
 <style scoped>
-h2 {
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 900;
-  font-size: 1.8em;
-  font-style: normal;
-}
-
 .game-info {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
@@ -237,4 +243,16 @@ h2 {
   color: #121413c8;
   background-color: #42b983;
 }
+
+@media (max-width: 600px) {
+    .game-info {     
+        font-size: 1em;
+        margin: auto;
+        padding: 0px;
+    }
+
+    .board{
+      margin-top: 0px;
+    }
+  }
 </style>

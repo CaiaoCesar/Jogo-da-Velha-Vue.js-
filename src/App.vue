@@ -2,11 +2,11 @@
   <HeaderInfo></HeaderInfo>
   <ImagesGame></ImagesGame>
 
-  <!-- GameBoard emite o evento game-ended -->
-  <GameBoard @game-ended="handleGameEnd"></GameBoard>
+  <!-- ScoreTable emite os nomes dos jogadores -->
+  <ScoreTable ref="scoreTable" @player-names-updated="handlePlayerNamesUpdate"></ScoreTable>
 
-  <!-- ScoreTable com ref para podermos acessar seus métodos -->
-  <ScoreTable ref="scoreTable"></ScoreTable>
+  <!-- GameBoard recebe os nomes dos jogadores -->
+  <GameBoard @game-ended="handleGameEnd" :playerNames="playerNames"></GameBoard>
 
   <GameInstructions></GameInstructions>
 </template>
@@ -27,21 +27,35 @@ export default {
     ScoreTable,
     GameInstructions
   },
+  data() {
+    return {
+      playerNames: {
+        playerX: "Jogador 1",
+        playerO: "Jogador 2"
+      }
+    }
+  },
   methods: {
     handleGameEnd(result) {
-      // Chama o método updateScore do ScoreTable
       this.$refs.scoreTable.updateScore(result);
+    },
+
+    handlePlayerNamesUpdate(names) {
+      // Atualiza os nomes dos jogadores quando são modificados no ScoreTable
+      this.playerNames = names;
     }
   }
 }
 </script>
 
 <style>
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
-  background-color: #333; 
+  background-color: #333;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

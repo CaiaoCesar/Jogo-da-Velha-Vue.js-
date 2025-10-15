@@ -1,9 +1,10 @@
 <template>
+     <h2>Que vença o melhor!</h2>
     <div class="input-names">
         <input id="player-one" name="player-one" class="input-p1" v-model="playerOne" type="text"
-            placeholder="Nome do Jogador 1">
+            placeholder="Nome do Jogador 1" @input="updatePlayerNames">
         <input id="player-two" name="player-two" class="input-p2" v-model="playerTwo" type="text"
-            placeholder="Nome do Jogador 2">
+            placeholder="Nome do Jogador 2" @input="updatePlayerNames">
     </div>
     <h3>Placar:</h3>
     <div class="tables-container">
@@ -49,18 +50,36 @@ export default {
                 this.scoreDraw++;
             }
         },
-
+        
         resetScore() {
             this.scoreX = 0;
             this.scoreO = 0;
             this.scoreDraw = 0;
+        },
+        
+        updatePlayerNames() {
+            // Emite os nomes dos jogadores para o componente pai
+            this.$emit('player-names-updated', {
+                playerX: this.playerOne || "Jogador 1",
+                playerO: this.playerTwo || "Jogador 2"
+            });
         }
+    },
+    mounted() {
+        // Emite os nomes iniciais quando o componente é carregado
+        this.updatePlayerNames();
     }
 }
 </script>
 
-
 <style scoped>
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 900;
+  font-size: 1.8em;
+  font-style: normal;
+}
 h3 {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
@@ -80,8 +99,19 @@ h3 {
 
 table {
     text-align: center;
-    width: 20%;
-    height: 10%;
+    width: 300px;
+    border-collapse: collapse; 
+}
+
+tr {
+    display: flex;
+    justify-content: space-between; /* Nome à esquerda, placar à direita */
+    align-items: center;
+    width: 100%;
+    padding: 10px 15px;
+    background: rgba(38, 221, 169, 0.1);
+    border-radius: 12px;
+    border: 2px solid #26dda9;
 }
 
 th,
@@ -93,9 +123,22 @@ td {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 900;
-    padding: 2px;
     font-size: 1.5em;
+    white-space: nowrap; 
 }
+
+th {
+    text-align: left;
+    flex: 1; /* Ocupa o espaço disponível */
+}
+
+td {
+    text-align: right;
+    min-width: 40px; /* Largura mínima para o número */
+    font-size: 1.8em;
+    font-weight: 900;
+}
+
 
 input {
     padding: 5px;
@@ -120,14 +163,47 @@ input {
     font-size: 1.5em;
 }
 
+
 @media (max-width: 600px) {
+    h3 {
+        font-size: 1.8em;
+    }
+
     .tables-container {
         flex-direction: column;
         gap: 15px;
     }
 
-    .player-table {
-        width: 80%;
+    table {
+        width: 90%;
+        max-width: 300px;
+    }
+
+    tr {
+        padding: 8px 12px;
+    }
+
+    th, td {
+        font-size: 1.3em;
+    }
+
+    td {
+        font-size: 1.6em;
+    }
+
+    .input-names {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .input-p1, .input-p2 {
+        width: 90%;
+        max-width: 300px;
+    }
+
+    .draws {
+        font-size: 1.3em;
     }
 }
 </style>
