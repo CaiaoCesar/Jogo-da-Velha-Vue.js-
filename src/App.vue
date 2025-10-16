@@ -1,14 +1,20 @@
 <template>
-  <HeaderInfo></HeaderInfo>
-  <ImagesGame></ImagesGame>
+  <div class="app-container">
+    <HeaderInfo></HeaderInfo>
+    <ImagesGame></ImagesGame>
 
-  <!-- ScoreTable emite os nomes dos jogadores -->
-  <ScoreTable ref="scoreTable" @player-names-updated="handlePlayerNamesUpdate"></ScoreTable>
+    <div class="main-game-area">
+      <div class="score-section">
+        <ScoreTable ref="scoreTable" @player-names-updated="handlePlayerNamesUpdate"></ScoreTable>
+      </div>
 
-  <!-- GameBoard recebe os nomes dos jogadores -->
-  <GameBoard @game-ended="handleGameEnd" :playerNames="playerNames" @reset-game="handleResetGame"></GameBoard>
+      <div class="game-section">
+        <GameBoard @game-ended="handleGameEnd" :playerNames="playerNames" @reset-game="handleResetGame"></GameBoard>
+      </div>
+    </div>
 
-  <GameInstructions></GameInstructions>
+    <GameInstructions></GameInstructions>
+  </div>
 </template>
 
 <script>
@@ -41,7 +47,6 @@ export default {
     },
 
     handlePlayerNamesUpdate(names) {
-      // Atualiza os nomes dos jogadores quando são modificados no ScoreTable
       this.playerNames = names;
     },
 
@@ -53,20 +58,105 @@ export default {
 </script>
 
 <style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
   background-color: #333;
+  min-height: 100vh;
 }
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2a94a6ff;
-  margin-top: 20px;
   background-color: #333;
+  min-height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.main-game-area {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  flex: 1;
+  margin: 20px 0;
+}
+
+.score-section,
+.game-section {
+  width: 100%;
+}
+
+/* ========== LAYOUT PARA TELAS GRANDES ========== */
+@media (min-width: 1024px) {
+  .main-game-area {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 80px;
+    margin: 40px 70px;
+  }
+
+  .score-section {
+    width: 35%;
+    order: 1;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .game-section {
+    width: 70%;
+    order: 2;
+  }
+
+  .game-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+/* ========== LAYOUT PARA TELAS MÉDIAS ========== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .main-game-area {
+    gap: 40px;
+  }
+
+  .app-container {
+    padding: 15px;
+  }
+}
+
+/* ========== LAYOUT PARA MOBILE ========== */
+@media (max-width: 767px) {
+  .app-container {
+    gap: 5px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .main-game-area {
+    gap: 20px;
+    margin: 15px 0;
+  }
 }
 </style>

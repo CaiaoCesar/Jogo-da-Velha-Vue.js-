@@ -1,5 +1,5 @@
 <template>
-     <h2>Que vença o melhor!</h2>
+    <h2>Jogadores:</h2>
     <div class="input-names">
         <input id="player-one" name="player-one" class="input-p1" v-model="playerOne" type="text"
             placeholder="Nome do Jogador 1" @input="updatePlayerNames">
@@ -7,22 +7,24 @@
             placeholder="Nome do Jogador 2" @input="updatePlayerNames">
     </div>
     <h3>Placar:</h3>
-    <div class="tables-container">
-        <table>
-            <tr>
-                <th>{{ playerOne || "Jogador 1" }} (X):</th>
-                <td>{{ scoreX }}</td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <th>{{ playerTwo || "Jogador 2" }} (O):</th>
-                <td>{{ scoreO }}</td>
-            </tr>
-        </table>
-    </div>
-    <div class="draws">
-        <p>Empates: {{ scoreDraw }}</p>
+    <div class="main-container">
+        <div class="tables-container">
+            <table>
+                <tr>
+                    <th>{{ playerOne || "Jogador 1" }} (X):</th>
+                    <td>{{ scoreX }}</td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th>{{ playerTwo || "Jogador 2" }} (O):</th>
+                    <td>{{ scoreO }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="draws">
+            <p>Empates: {{ scoreDraw }}</p>
+        </div>
     </div>
 </template>
 
@@ -50,15 +52,14 @@ export default {
                 this.scoreDraw++;
             }
         },
-        
+
         resetScore() {
             this.scoreX = 0;
             this.scoreO = 0;
             this.scoreDraw = 0;
         },
-        
+
         updatePlayerNames() {
-            // Emite os nomes dos jogadores para o componente pai
             this.$emit('player-names-updated', {
                 playerX: this.playerOne || "Jogador 1",
                 playerO: this.playerTwo || "Jogador 2"
@@ -66,7 +67,6 @@ export default {
         }
     },
     mounted() {
-        // Emite os nomes iniciais quando o componente é carregado
         this.updatePlayerNames();
     }
 }
@@ -74,18 +74,47 @@ export default {
 
 <style scoped>
 h2 {
-  font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 900;
-  font-size: 1.8em;
-  font-style: normal;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-size: 1.8em;
+    font-style: normal;
 }
+
 h3 {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 900;
     font-style: normal;
-    font-size: 2.2em
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.main-container {
+    margin: 0;
+    gap: 0;
+    padding: 0;
+}
+
+.input-names {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.input-p1,
+.input-p2 {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 2px solid #42b983;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-size: 1.1em;
+    width: 200px;
 }
 
 .tables-container {
@@ -100,15 +129,15 @@ h3 {
 table {
     text-align: center;
     width: 300px;
-    border-collapse: collapse; 
+    border-collapse: collapse;
 }
 
 tr {
     display: flex;
-    justify-content: space-between; /* Nome à esquerda, placar à direita */
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 10px 15px;
+    padding: 8px 10px;
     background: rgba(38, 221, 169, 0.1);
     border-radius: 12px;
     border: 2px solid #26dda9;
@@ -124,31 +153,19 @@ td {
     font-optical-sizing: auto;
     font-weight: 900;
     font-size: 1.5em;
-    white-space: nowrap; 
+    white-space: nowrap;
 }
 
 th {
     text-align: left;
-    flex: 1; /* Ocupa o espaço disponível */
+    flex: 1;
 }
 
 td {
     text-align: right;
-    min-width: 40px; /* Largura mínima para o número */
+    min-width: 40px;
     font-size: 1.8em;
     font-weight: 900;
-}
-
-
-input {
-    padding: 5px;
-    border-radius: 5px;
-    border: 2px solid #42b983;
-    font-family: "Montserrat", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 900;
-    font-style: normal;
-    font-size: 1.1em;
 }
 
 .draws {
@@ -159,11 +176,11 @@ input {
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-weight: 900;
-    padding: 2px;
     font-size: 1.5em;
+    margin-top: 15px;
 }
 
-
+/* ========== RESPONSIVO ========== */
 @media (max-width: 600px) {
     h3 {
         font-size: 1.8em;
@@ -183,7 +200,8 @@ input {
         padding: 8px 12px;
     }
 
-    th, td {
+    th,
+    td {
         font-size: 1.3em;
     }
 
@@ -197,13 +215,63 @@ input {
         gap: 10px;
     }
 
-    .input-p1, .input-p2 {
+    .input-p1,
+    .input-p2 {
         width: 90%;
         max-width: 300px;
     }
 
     .draws {
         font-size: 1.3em;
+    }
+}
+
+/* ========== LAYOUT PARA TELAS GRANDES ========== */
+@media (min-width: 1024px) {
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    h2 {
+        font-size: 2em;
+        margin-bottom: 15px;
+    }
+
+    h3 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+
+    .tables-container {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+
+    table {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .input-names {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .input-p1,
+    .input-p2 {
+        width: 100%;
+        max-width: 280px;
+        padding: 12px 15px;
+        font-size: 1em;
+    }
+
+    .draws {
+        font-size: 1.4em;
+        margin-top: 15px;
     }
 }
 </style>
