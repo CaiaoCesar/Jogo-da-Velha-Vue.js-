@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div class="btn-restart">
+  <div class="btn-reset-mobile">
     <button @click="resetGame">Zerar Estatísticas</button>
   </div>
 </template>
@@ -202,7 +202,7 @@ export default {
   font-optical-sizing: auto;
   font-weight: 700;
   font-style: normal;
-  font-size: 1.1em;
+  font-size: 1.3em;
   padding: 6px;
   text-align: center;
   min-height: 120px;
@@ -267,19 +267,19 @@ export default {
   }
 }
 
-.btn-restart {
+.btn-reset-mobile {
   display: flex;
-  width: 40%;
+  width: 80%;
+  max-width: 350px;
   height: 80px;
-  margin: auto;
-  margin-bottom: 20px;
+  margin: 20px auto;
   border-radius: 20px;
   overflow: hidden;
   border: 3px solid #42b983;
   cursor: pointer;
 }
 
-.btn-restart button {
+.btn-reset-mobile button {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 900;
@@ -291,16 +291,19 @@ export default {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn-restart:hover {
+.btn-reset-mobile:hover {
   color: #121413c8;
   background-color: #42b983;
   border: 3px solid #e0e8e4c8;
   Transform: scale(1.025);
 }
 
-.btn-restart:hover button {
+.btn-reset-mobile:hover button {
   color: #121413c8;
   background-color: #42b983;
 }
@@ -317,10 +320,15 @@ export default {
   }
 }
 
+/* ========== TELAS GRANDES ========== */
 @media (min-width: 1024px) {
   .game-info {
-    font-size: 1.2em;
-    min-height: 140px;
+    font-size: 1.4em;
+    min-height: 220px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; 
   }
 
   .board {
@@ -329,9 +337,21 @@ export default {
     margin: 3rem auto;
   }
 
-  .btn-restart {
-    width: 50%;
-    max-width: 300px;
+  .btn-reset-mobile {
+    display: none;
+  }
+}
+
+/* ========== TELAS MUITO GRANDES ========== */
+@media (min-width: 1200px) {
+  .btn-reset {
+    width: 400px;
+    height: 90px;
+    margin: 30px auto; /* ← Manter centralização */
+  }
+
+  .btn-reset button {
+    font-size: 1.7em;
   }
 }
 </style>

@@ -25,6 +25,10 @@
         <div class="draws">
             <p>Empates: {{ scoreDraw }}</p>
         </div>
+
+        <div class="reset-button-container">
+            <slot name="reset-button"></slot>
+        </div>
     </div>
 </template>
 
@@ -224,6 +228,18 @@ td {
     .draws {
         font-size: 1.3em;
     }
+
+    .main-container{
+        display: flex; 
+        justify-content: center;
+    }
+
+    .reset-button-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
 }
 
 /* ========== LAYOUT PARA TELAS GRANDES ========== */
@@ -258,20 +274,25 @@ td {
 
     .input-names {
         flex-direction: column;
-        gap: 15px;
+        gap: 20px;
+        margin: 10px 30px;
     }
 
     .input-p1,
     .input-p2 {
         width: 100%;
         max-width: 280px;
-        padding: 12px 15px;
+        padding: 12px 25px;
         font-size: 1em;
     }
 
     .draws {
         font-size: 1.4em;
-        margin-top: 15px;
+        margin-top: 7px;
+    }
+
+    .reset-button-container {
+        margin-top: 25px;
     }
 }
 </style>
