@@ -310,7 +310,7 @@ export default {
 
 @media (max-width: 600px) {
   .game-info {
-    font-size: 1em;
+    font-size: 1.2em;
     margin: auto;
     padding: 0px;
   }
@@ -328,7 +328,7 @@ export default {
     padding: 25px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around; 
+    justify-content: space-around;
   }
 
   .board {
@@ -347,7 +347,7 @@ export default {
   .btn-reset {
     width: 400px;
     height: 90px;
-    margin: 30px auto; /* ← Manter centralização */
+    margin: 30px auto;
   }
 
   .btn-reset button {

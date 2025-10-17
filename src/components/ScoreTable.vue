@@ -184,19 +184,38 @@ td {
     margin-top: 15px;
 }
 
-/* ========== RESPONSIVO ========== */
 @media (max-width: 600px) {
+    h2 {
+        text-align: center;
+        font-size: 1.6em;
+        margin-bottom: 10px;
+    }
+
     h3 {
         font-size: 1.8em;
+        text-align: center;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
     }
 
     .tables-container {
+        display: flex;
         flex-direction: column;
         gap: 15px;
+        width: 100%;
+        align-items: center;
     }
 
     table {
-        width: 90%;
+        width: 100%;
         max-width: 300px;
     }
 
@@ -217,21 +236,21 @@ td {
         flex-direction: column;
         align-items: center;
         gap: 10px;
+        width: 100%;
     }
 
     .input-p1,
     .input-p2 {
-        width: 90%;
+        width: 100%;
         max-width: 300px;
     }
 
     .draws {
+        text-align: center;
         font-size: 1.3em;
-    }
-
-    .main-container{
-        display: flex; 
-        justify-content: center;
+        margin-top: 0px;
+        width: 100%;
+        order: 3;
     }
 
     .reset-button-container {
@@ -239,6 +258,11 @@ td {
         display: flex;
         justify-content: center;
         margin-top: 20px;
+        order: 4;
+    }
+
+    .tables-container {
+        order: 2;
     }
 }
 

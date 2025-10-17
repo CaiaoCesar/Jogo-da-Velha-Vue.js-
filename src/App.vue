@@ -89,8 +89,8 @@ body {
   color: #2a94a6ff;
   background-color: #333;
   min-height: 100vh;
-  display: flex; 
-  justify-content: center; 
+  display: flex;
+  justify-content: center;
 }
 
 .app-container {
@@ -99,7 +99,7 @@ body {
   min-height: 100vh;
   padding: 20px;
   max-width: 1400px;
-  width: 100%; 
+  width: 100%;
   align-items: center;
 }
 
@@ -109,26 +109,26 @@ body {
   gap: 30px;
   flex: 1;
   margin: 20px 0;
-  width: 100%; 
-  align-items: center; 
+  width: 100%;
+  align-items: center;
 }
 
 .game-section {
   width: 100%;
   display: flex;
-  justify-content: center; 
-  align-items: center; /* ← Adicionar se não existir */
-  flex-direction: column; /* ← Para alinhar verticalmente */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .score-section {
   width: 100%;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 }
 
 .btn-reset-desktop {
-  display: none; 
+  display: none;
 }
 
 .my-swal-popup {
@@ -156,7 +156,7 @@ body {
     gap: 5px;
     padding: 10px;
     text-align: center;
-    align-items: center; 
+    align-items: center;
   }
 
   .main-game-area {
@@ -166,8 +166,14 @@ body {
     align-items: center;
   }
 
-  /* GARANTE QUE AS SEÇÕES VOLTEM A 100% NO MOBILE */
-  .score-section,
+  .score-section {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
   .game-section {
     width: 100% !important;
     max-width: 100% !important;
@@ -198,14 +204,14 @@ body {
     flex-direction: row;
     align-items: flex-start;
     gap: 80px;
-    margin: 40px 0; 
+    margin: 40px 0;
     width: 100%;
-    max-width: 1200px; 
-    justify-content: center; 
+    max-width: 1200px;
+    justify-content: center;
   }
 
   .score-section {
-    width: 400px; 
+    width: 400px;
     order: 1;
     padding: 32px;
     display: flex;
@@ -214,7 +220,7 @@ body {
   }
 
   .game-section {
-    width: 600px; 
+    width: 600px;
     order: 2;
     display: flex;
     flex-direction: column;
