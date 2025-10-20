@@ -15,7 +15,7 @@
       </div>
 
       <div class="game-section">
-        <GameBoard @game-ended="handleGameEnd" :playerNames="playerNames" @reset-game="handleResetGame"></GameBoard>
+        <GameBoard ref="gameBoard" @game-ended="handleGameEnd" :playerNames="playerNames" @reset-game="handleResetGame"></GameBoard>
       </div>
     </div>
 
