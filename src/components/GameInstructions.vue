@@ -1,9 +1,3 @@
-<script>
-export default {
-    name: 'GameInstructions'
-}
-</script>
-
 <template>
     <div class="instructions">
         <h3>Como Jogar?</h3>
@@ -19,6 +13,12 @@ export default {
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    name: 'GameInstructions'
+}
+</script>
 
 <style scoped>
 .instructions {
